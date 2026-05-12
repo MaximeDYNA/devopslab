@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Vagrant
+.vagrant/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Ansible
+*.retry
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# SSH Keys
+*.pem
+*.key
+id_rsa
+id_ed25519
