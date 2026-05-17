@@ -15,6 +15,7 @@ cp /workspace/vagrant/shared/scripts/common/utilities.sh /tmp/utilities.sh
 cp /workspace/vagrant/shared/scripts/docker/install-docker.sh /tmp/install-docker.sh
 cp /workspace/vagrant/shared/scripts/jenkins/install-jenkins.sh /tmp/install-jenkins.sh
 cp /workspace/vagrant/shared/scripts/nginx/install-nginx.sh /tmp/install-nginx.sh
+cp /workspace/vagrant/shared/scripts/nginx/configure-nginx.sh /tmp/configure-nginx.sh
 
 
 # ==================================================
@@ -26,7 +27,7 @@ chmod +x /tmp/utilities.sh
 chmod +x /tmp/install-docker.sh
 chmod +x /tmp/install-jenkins.sh
 chmod +x /tmp/install-nginx.sh
-
+chmod +x /tmp/configure-nginx.sh
 # ==================================================
 # Load Shared Functions
 # ==================================================
@@ -69,6 +70,15 @@ bash /tmp/install-jenkins.sh
 log_info "Installing NGINX"
 
 bash /tmp/install-nginx.sh
+
+# ==================================================
+# NGINX Configuration
+# ==================================================
+
+log_info "Configuring NGINX"
+
+bash /tmp/configure-nginx.sh
+
 
 
 # ==================================================
