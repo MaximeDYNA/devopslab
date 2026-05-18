@@ -4,6 +4,9 @@ set -euo pipefail
 
 update_system() {
 
+  # Set timezone
+  timedatectl set-timezone America/Toronto
+
   echo "[INFO] Configuring APT to use IPv4..."
 
   cat > /etc/apt/apt.conf.d/99force-ipv4 <<EOF
@@ -14,7 +17,7 @@ EOF
   apt-get update -y
 
   echo "[INFO] Upgrading installed packages..."
-  DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+#  DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
 }
 

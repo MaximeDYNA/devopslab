@@ -26,7 +26,6 @@ chmod +x /tmp/packages.sh
 chmod +x /tmp/utilities.sh
 chmod +x /tmp/install-docker.sh
 chmod +x /tmp/install-jenkins.sh
-#chmod +x /tmp/configure-jenkins-persistence.sh
 chmod +x /tmp/install-nginx.sh
 chmod +x /tmp/configure-nginx.sh
 
