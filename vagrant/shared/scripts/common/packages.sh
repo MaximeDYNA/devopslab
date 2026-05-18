@@ -1,15 +1,28 @@
 #!/bin/bash
 
+set -euo pipefail
+
 update_system() {
 
+  echo "[INFO] Configuring APT to use IPv4..."
+
+  cat > /etc/apt/apt.conf.d/99force-ipv4 <<EOF
+Acquire::ForceIPv4 "true";
+EOF
+
+  echo "[INFO] Updating package index..."
   apt-get update -y
-  apt-get upgrade -y
+
+  echo "[INFO] Upgrading installed packages..."
+  DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 
 }
 
 install_common_packages() {
 
-  apt-get install -y \
+  echo "[INFO] Installing common packages..."
+
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
     curl \
     wget \
     unzip \
@@ -29,7 +42,21 @@ install_common_packages() {
 
 cleanup_packages() {
 
+  echo "[INFO] Cleaning package cache..."
+
   apt-get autoremove -y
   apt-get clean
 
 }
+
+main() {
+
+  update_system
+  install_common_packages
+  cleanup_packages
+
+  echo "[INFO] Common packages installation completed."
+
+}
+
+main "$@"

@@ -1,6 +1,13 @@
 # macOS
 .DS_Store
 
+# Runtime persistence
+persistent-data/
+
+# Backups
+/backups/
+*.tar.gz
+
 # Vagrant
 .vagrant/
 

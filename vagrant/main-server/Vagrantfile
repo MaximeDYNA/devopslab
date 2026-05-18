@@ -38,6 +38,7 @@ Vagrant.configure("2") do |config|
   # Uncomment if needed later
   #
   config.vm.synced_folder "../../", "/workspace", create: true
+  config.vm.synced_folder "../../persistent-data/jenkins", "/persistent-data/jenkins", create: true
 
   # -------------------------------------------------
   # VMware Provider Configuration
