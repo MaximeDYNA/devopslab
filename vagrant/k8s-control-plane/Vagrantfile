@@ -1,0 +1,74 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+
+  # ==================================================
+  # Base Box
+  # ==================================================
+    # ARM64 Ubuntu box compatible with Apple Silicon
+
+  config.vm.box = "bento/ubuntu-22.04"
+
+  # ==================================================
+  # VM Hostname
+  # ==================================================
+
+  config.vm.hostname = "k8s-control-plane"
+
+  # ==================================================
+  # Private Network
+  # ==================================================
+  # Private network for VM-to-VM communication
+
+  config.vm.network "private_network", ip: "192.168.56.30"
+
+  # -------------------------------------------------
+  # Synced Folder
+  # -------------------------------------------------
+  # Disable default synced folder for better performance
+  #
+
+  # Optional custom synced folder
+  # Uncomment if needed later
+  #
+  config.vm.synced_folder "../../", "/workspace", create: true
+
+
+  # ==================================================
+  # VMware Provider Configuration
+  # ==================================================
+
+  config.vm.provider "vmware_desktop" do |vmware|
+
+    vmware.vmx["memsize"]  = "4096"
+    vmware.vmx["numvcpus"] = "2"
+
+    vmware.gui = false
+
+  end
+
+ # -------------------------------------------------
+  # Disk Configuration
+  # -------------------------------------------------
+  # NOTE:
+  # VMware disks are usually managed automatically.
+  # Additional disk resizing can be handled later
+  # if required.
+
+  # -------------------------------------------------
+  # SSH Configuration
+  # -------------------------------------------------
+  config.ssh.insert_key = false
+
+  # -------------------------------------------------
+  # Provisioning
+  # -------------------------------------------------
+  # Initial bootstrap structure
+  config.vm.provision "shell",
+  path: "../shared/scripts/bootstrap/k8s-control-plane-bootstrap.sh", 
+  privileged: true
+
+
+end
