@@ -14,6 +14,7 @@ VMS=(
   "main-server"
   "monitoring-server"
   "k8s-control-plane"
+  "k8s-worker-1"
 )
 
 # ==================================================

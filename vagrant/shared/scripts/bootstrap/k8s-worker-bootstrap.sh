@@ -3,7 +3,7 @@
 set -e
 
 echo "=================================================="
-echo " Kubernetes Control Plane Bootstrap"
+echo " Kubernetes Worker Bootstrap"
 echo "=================================================="
 
 # ==================================================
@@ -75,9 +75,6 @@ EOF
 
 sysctl --system
 
-
-
-
 # ==================================================
 # Install Containerd
 # ==================================================
@@ -85,52 +82,16 @@ sysctl --system
 echo ""
 echo "[INFO] Installing containerd..."
 
-apt-get update -y
-
 apt-get install -y containerd
-
-# ==================================================
-# Containerd Configuration
-# ==================================================
-
-echo ""
-echo "[INFO] Configuring containerd..."
 
 mkdir -p /etc/containerd
 
 containerd config default | tee /etc/containerd/config.toml
 
-# ==================================================
-# Enable Systemd Cgroup Driver
-# ==================================================
-
-echo ""
-echo "[INFO] Enabling systemd cgroup driver..."
-
 sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
 
-# ==================================================
-# Restart Containerd
-# ==================================================
-
-echo ""
-echo "[INFO] Restarting containerd..."
-
 systemctl restart containerd
-
 systemctl enable containerd
-
-# ==================================================
-# Validate Containerd
-# ==================================================
-
-echo ""
-echo "[INFO] Validating containerd..."
-
-systemctl status containerd --no-pager
-
-
-
 
 # ==================================================
 # Add Kubernetes Repository
@@ -158,28 +119,13 @@ echo "[INFO] Installing Kubernetes components..."
 
 apt-get install -y \
   kubelet \
-  kubeadm \
-  kubectl
+  kubeadm
 
-# ==================================================
-# Prevent Automatic Upgrades
-# ==================================================
-
-echo ""
-echo "[INFO] Locking Kubernetes package versions..."
-
-apt-mark hold kubelet kubeadm kubectl
-
-# ==================================================
-# Enable Kubelet
-# ==================================================
-
-echo ""
-echo "[INFO] Enabling kubelet..."
+apt-mark hold kubelet kubeadm
 
 systemctl enable kubelet
 
 echo ""
 echo "=================================================="
-echo " Kubernetes Base Preparation Completed"
+echo " Kubernetes Worker Preparation Completed"
 echo "=================================================="
